@@ -18,7 +18,7 @@ Running : WSL-ubuntu
 
 以下按章节循序渐进学习:
 
-+ [ ] sem / lock / cond
++ [x] sem / lock / cond
 + [ ] block_queue
 + [ ] log
 + [ ] sql pool && RAII interface
