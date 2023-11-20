@@ -1,3 +1,5 @@
+#pragma once
+
 #include <semaphore.h>
 #include <pthread.h>
 #include <time.h>
