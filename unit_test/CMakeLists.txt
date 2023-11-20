@@ -17,17 +17,23 @@ enable_testing()
 
 add_executable(
   test_executable
+
+  ../src/log/log.cpp
+  ../src/CGImysql/sql_connection_pool.cpp
+
   lock/mutex.cpp
   lock/semaphore.cpp
   lock/cond.cpp
   log/block_queue.cpp
-  ../src/log/log.cpp
   log/log.cpp
+  CGImysql/sql_connection_pool.cpp
 )
 
 target_link_libraries(
   test_executable
   gtest_main
+  -lpthread
+  -lmysqlclient
 )
 
 include(GoogleTest)
