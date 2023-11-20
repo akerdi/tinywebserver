@@ -21,6 +21,8 @@ add_executable(
   lock/semaphore.cpp
   lock/cond.cpp
   log/block_queue.cpp
+  ../src/log/log.cpp
+  log/log.cpp
 )
 
 target_link_libraries(
