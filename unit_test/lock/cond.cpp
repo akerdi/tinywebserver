@@ -7,7 +7,7 @@ static cond _cond;
 static locker _mutex;
 int con_share_data = 32767;
 
-void* cond_block(void* arg) {
+static void* cond_block(void* arg) {
   while (con_share_data > 0) {
     _mutex.lock();
     con_share_data--;
@@ -16,7 +16,7 @@ void* cond_block(void* arg) {
   _cond.broadcast();
 }
 
-bool cond_test() {
+static bool cond_test() {
   pthread_t thread_id;
   void* exit_status;
   int i;

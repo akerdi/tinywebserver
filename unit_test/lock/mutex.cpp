@@ -10,7 +10,7 @@ TEST(HelloTest, BasicAssertions) {
 static locker lock;
 
 int share_data;
-void* block(void* arg) {
+static void* block(void* arg) {
   int i;
   for (i = 0; i < 1024 * 1024; i++) {
     lock.lock();
@@ -19,7 +19,7 @@ void* block(void* arg) {
   }
 }
 
-void thread_test() {
+static void thread_test() {
   pthread_t pid;
   pthread_create(&pid, NULL, block, NULL);
   for (int i = 0; i < 50; i++) {
