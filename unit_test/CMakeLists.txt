@@ -20,6 +20,7 @@ add_executable(
   lock/mutex.cpp
   lock/semaphore.cpp
   lock/cond.cpp
+  log/block_queue.cpp
 )
 
 target_link_libraries(
