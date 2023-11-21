@@ -15,11 +15,12 @@ void connection_pool::init(string url, string user, string password, string data
 
   MYSQL* mysql = NULL;
   for (int i = 0; i < maxConn; i++) {
-    if (!mysql_init(mysql)) {
+    mysql = mysql_init(mysql);
+    if (!mysql) {
       LOG_ERROR("Mysql init errno:%d", errno);
       exit(1);
     }
-    if (mysql_real_connect(mysql, url.c_str(), user.c_str(), password.c_str(), databaseName.c_str(), port, 0, NULL) == NULL) {
+    if (!mysql_real_connect(mysql, url.c_str(), user.c_str(), password.c_str(), databaseName.c_str(), port, NULL, NULL)) {
       LOG_ERROR("Mysql real connect err:%s", mysql_error(mysql));
       exit(1);
     }

@@ -15,7 +15,7 @@ public:
   void DestroyPool();
 
   static connection_pool* GetInstance();
-  void init(string url, string user, string password, string databaseName, int port, int maxConn, int close_log);
+  void init(string url, string user, string password, string databaseName, int port = 3306, int maxConn = 8, int close_log = 0);
 
 private:
   connection_pool();

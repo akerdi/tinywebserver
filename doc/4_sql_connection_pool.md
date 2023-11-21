@@ -17,7 +17,7 @@ public:
   // 获取单例类
   static connection_pool* GetInstance();
   // 初始化时进行init所有数据库对象放入mysqlList中
-  void init(string url, string user, string password, string databaseName, int port, int maxConn, int close_log);
+  void init(string url, string user, string password, string databaseName, int port = 3306, int maxConn = 8, int close_log = 0);
 
 private:
   locker m_mutex;         // 锁
@@ -32,16 +32,18 @@ private:
 
 ```cpp
 void connection_pool::init(string url, string user, string password, string databaseName, int port, int maxConn, int close_log) {
-  MYSQL* con = NULL;
+  MYSQL* mysql = NULL;
   for (int i = 0; i < maxConn; i++) {
-    if (!mysql_init(con)) {
+    // mysql_init should pass `mysql` pointer in and get output assign to `mysql`
+    mysql = mysql_init(mysql);
+    if (!mysql) {
       exit(1);
     }
-    if (mysql_real_connect(con, url, user, password, databaseName, port, 0, NULL) == NULL) {
-      printf("Mysql real connect err:%s\n", mysql_error(con));
+    if (mysql_real_connect(mysql, url, user, password, databaseName, port, 0, NULL) == NULL) {
+      printf("Mysql real connect err:%s\n", mysql_error(mysql));
       exit(1);
     }
-    mysqlList.push_back(con);
+    mysqlList.push_back(mysql);
   }
   // 信号量重新加载为对应连接个数
   m_sem = sem(maxConn);
@@ -121,4 +123,3 @@ private:
 如果我们使用`int* ptr`作为参数，相当于告诉函数一个指针的值，而不是指针的地址。这就好像你告诉别人一个门牌号，而不是门牌号的地址。别人无法通过这个门牌号找到这个房间，并进行修改。
 所以，为了能够在函数内部修改指针本身的值，我们需要使用指向指针的指针（`int**`），这样函数就能通过指针的地址找到指针，并修改它的值。
 ```
-
