@@ -20,6 +20,7 @@ add_executable(
 
   ../src/log/log.cpp
   ../src/CGImysql/sql_connection_pool.cpp
+  ../src/timer/lst_timer.cpp
 
   lock/mutex.cpp
   lock/semaphore.cpp
@@ -27,6 +28,7 @@ add_executable(
   log/block_queue.cpp
   log/log.cpp
   CGImysql/sql_connection_pool.cpp
+  timer/lst_timer.cpp
 )
 
 target_link_libraries(
