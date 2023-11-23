@@ -29,6 +29,7 @@ add_executable(
   log/log.cpp
   CGImysql/sql_connection_pool.cpp
   timer/lst_timer.cpp
+  threadpool/threadpool.cpp
 )
 
 target_link_libraries(

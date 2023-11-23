@@ -9,7 +9,7 @@
 int count = 0;
 locker m_mutex;
 
-class Http_conn {
+class Http_conn_test_class {
 public:
   void process() {
     m_mutex.lock();
@@ -25,11 +25,11 @@ public:
 static int test() {
   connection_pool* connPool = connection_pool::GetInstance();
   connPool->init("localhost", "root", "akerdi123456", "yourdb", 3306, 8, 0);
-  Http_conn https[loop_count];
-  threadpool<Http_conn>* pool = new threadpool<Http_conn>(connPool);
-  int n = sizeof(https) / sizeof(Http_conn);
+  Http_conn_test_class https[loop_count];
+  threadpool<Http_conn_test_class>* pool = new threadpool<Http_conn_test_class>(connPool);
+  int n = sizeof(https) / sizeof(Http_conn_test_class);
   for (int i = 0; i < n; i++) {
-    pool->append_p(https+i);
+    pool->append(https+i);
   }
   return 1;
 }
@@ -38,4 +38,5 @@ TEST(threadpoolTest, Basic) {
   EXPECT_EQ(test(), 1);
   sleep(1);
   EXPECT_EQ(count, loop_count);
+  connection_pool::GetInstance()->DestroyPool();
 }
