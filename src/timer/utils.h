@@ -9,7 +9,7 @@ public:
 
   void init(int timeslot);
   int setnonblocking(int fd);
-  void addfd(int epollfd, int sockfd, bool one_shot, int TRIGMode);
+  void addfd(int epollfd, int sockfd, bool one_shot);
 
   static void sig_handler(int sig);
   void addsig(int sig, void(*handler)(int), bool restart=true);

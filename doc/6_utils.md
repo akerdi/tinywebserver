@@ -37,10 +37,12 @@ void Utils::sig_handler(int sig) {
   int save_errno = errno;
   int msg = sig;
   // send 长度设为1，因为接收时只想知道char类型长数据
-  send(sig, (char*)&msg, 1, 0);
+  send(u_pipefd[1], (char*)&msg, 1, 0);
 }
 void Utils::addsig(int sig, void(*handler)(int), bool restart) {
   struct sigaction sa;
+  // https://stackoverflow.com/a/33464650/6677202
+	// You must do most the variables of struct sigaction initialized
   memset(&sa, '\0', sizeof(sa));
   sa.sa_handler = handler;
   if (restart)

@@ -14,17 +14,13 @@ int Utils::setnonblocking(int fd) {
   fcntl(fd, F_SETFL, new_opt);
   return old_opt;
 }
-void Utils::addfd(int epollfd, int sockfd, bool one_shot, int TRIGMode) {
+void Utils::addfd(int epollfd, int sockfd, bool one_shot) {
   epoll_event event;
   event.data.fd = sockfd;
-  if (1 == TRIGMode) {
-    event.events = EPOLLIN | EPOLLRDHUP | EPOLLERR;
-  } else {
-    event.events = EPOLLIN | EPOLLET | EPOLLRDHUP | EPOLLERR;
-  }
-  if (one_shot) {
-    event.events |= EPOLLONESHOT;
-  }
+  event.events = EPOLLIN | EPOLLRDHUP | EPOLLERR;
+
+  if (one_shot) event.events |= EPOLLONESHOT;
+
   epoll_ctl(epollfd, EPOLL_CTL_ADD, sockfd, &event);
   setnonblocking(sockfd);
 }
@@ -32,17 +28,17 @@ void Utils::addfd(int epollfd, int sockfd, bool one_shot, int TRIGMode) {
 void Utils::sig_handler(int sig) {
   int saved_errno = errno;
   int msg = sig;
-  send(sig, (char*)msg, 1, 0);
+  send(u_pipefd[1], (char*)&msg, 1, 0);
   errno = saved_errno;
 }
-void Utils::addsig(int sig, void(*handler)(int), bool restart=true) {
+void Utils::addsig(int sig, void(*handler)(int), bool restart) {
   struct sigaction sa;
+  memset(&sa, '\0', sizeof(sa));
   sa.sa_handler = handler;
   sigfillset(&sa.sa_mask);
-  if (restart) {
+  if (restart)
     sa.sa_flags |= SA_RESTART;
-  }
-  assert(sigaction(sig, &sa, NULL) != 0);
+  assert(sigaction(sig, &sa, NULL) == 0);
 }
 void Utils::timer_handler() {
   m_timer_lst.tick();
