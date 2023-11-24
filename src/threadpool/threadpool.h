@@ -27,7 +27,7 @@ private:
 
 template <class T>
 threadpool<T>::threadpool(connection_pool* connPool, int thread_number, int max_requests):m_connPool(connPool),m_max_requests(max_requests) {
-  if (thread_number <= 0 || max_request <= 0)
+  if (thread_number <= 0 || max_requests <= 0)
     throw std::exception();
   m_threads = new pthread_t[thread_number];
   if (!m_threads)
