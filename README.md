@@ -14,6 +14,14 @@ IDE     : VSCode
 Running : WSL-ubuntu
 ```
 
+## RUN
+
+运行本地mysql, 填写db_user, db_pass, db_name 到main.cpp中。
+
+    cp .vscode/launch.example.json .vscode/launch.json
+    cp .vscode/tasks.example.json .vscode/tasks.json
+    # 键盘F5 启动debug
+
 ## Content
 
 以下按章节循序渐进学习:
@@ -25,7 +33,7 @@ Running : WSL-ubuntu
 + [x] lst_timer && utils
 + [x] threadpool
 + [x] webserver(constitude all logic above)
-+ [ ] http logic
++ [x] http logic
 
 ## Ref
 
