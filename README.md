@@ -14,20 +14,32 @@ IDE     : VSCode
 Running : WSL-ubuntu
 ```
 
+## RUN
+
+运行本地mysql, 填写db_user, db_pass, db_name 到main.cpp中。
+
+    cp .vscode/launch.example.json .vscode/launch.json
+    cp .vscode/tasks.example.json .vscode/tasks.json
+    # 键盘F5 启动debug
+
 ## Content
 
 以下按章节循序渐进学习:
 
 + [x] sem / lock / cond
-+ [ ] block_queue
-+ [ ] log
-+ [ ] sql pool && RAII interface
-+ [ ] threadpool
-+ [ ] timer
-+ [ ] webserver(constitude all logic above)
-+ [ ] http logic
++ [x] block_queue
++ [x] log
++ [x] sql pool && RAII interface
++ [x] lst_timer && utils
++ [x] threadpool
++ [x] webserver(constitude all logic above)
++ [x] http logic
 
 ## Ref
+
+https://beej-zhcn.netdpi.net/
+
+https://github.com/akerdi/sigAttachEpoll_sample
 
 https://github.com/qinguoyi/TinyWebServer
 
