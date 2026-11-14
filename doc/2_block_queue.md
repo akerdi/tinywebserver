@@ -47,7 +47,7 @@ template <class T> class block_queue {
   }
 ```
 
-以上可以看到`bool(*fool)()` 方法中判别变量的加/减锁方式，对比`int(*size)()` 方法看到操作局部变量方案。
+以上可以看到`bool(*full)()` 方法中判别变量的加/减锁方式，对比`int(*size)()` 方法看到操作局部变量方案。
 
 核心方法是生产者/消费者 的三个方法:
 
@@ -56,7 +56,7 @@ template <class T> class block_queue {
   ...
   bool push(const T& item) {
     m_mutex.lock();
-    if (m_size <= 0) {
+    if (m_size >= m_max_size) {
       m_cond.broadcast();
       m_mutex.unlock();
       return false;
